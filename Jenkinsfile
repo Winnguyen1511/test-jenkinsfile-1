@@ -14,5 +14,16 @@ pipeline {
                 }
             }
         }
+        stage('SSH Publish')
+        {
+            steps{
+                sshagent(['80fba500-0c64-4e32-a936-6462c559c949']) {
+                    // sh 'ssh@172.17.0.3'
+                    sh 'ssh root@172.17.0.4 "mkdir /root/jenkins_workspace/workspace/'+env.BUILD_NUMBER + '_'+params.PROJECT+'_'+params.BRANCH+'"'
+                    sh 'scp -r '+'/var/jenkins_home/workspace/'+ env.BUILD_NUMBER + '_'+params.PROJECT+'_'+params.BRANCH+'/** '+ 'root@172.17.0.4:/root/jenkins_workspace/workspace/'+env.BUILD_NUMBER + '_'+params.PROJECT+'_'+params.BRANCH
+                }
+            }
+        }
     }
+
 }
