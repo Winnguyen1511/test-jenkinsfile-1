@@ -10,5 +10,11 @@ pipeline {
                 }
             }
         }
+        stage('SSH Publish')
+        {
+            steps{
+                sshPublisher(publishers: [sshPublisherDesc(configName: 'linux-jenkins-slave-1', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: env.BUILD_NUMBER+'_'params.PROJECT+'_'+params.BRANCH, remoteDirectorySDF: false, removePrefix: '', sourceFiles: '**')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+            }
+        }
     }
 }
